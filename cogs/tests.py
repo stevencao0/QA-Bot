@@ -2,8 +2,8 @@ import discord
 import asyncio
 from discord.ext import commands
 import time
+# pip install xlsxwriter - module for writing worksheets
 import xlsxwriter
-# pip install xlsxwriter
 from datetime import date
 
 correct = '\U0001F44D'
@@ -28,10 +28,10 @@ class Tests(commands.Cog):
     #Test Suite - !test in text channel to execute
     @commands.command()
     async def test(self, ctx):
-
-        #worksheetDataEntry(worksheet, row, id, description, passFail, date)
+        # Set up the worksheet data's column names
         await worksheetDataEntryManual(0, "ID", "Description", "Pass/Fail", "Date")
         await reservedEntry(self)
+        #Test - !ping - Responds a simple message
         await test_ping(self, ctx, "Hear ya!", "Using !ping command in text channel and bot respond 'Hey There'")
         time.sleep(1)
         #Test - !play - Is the tester in a voice channel while calling?
@@ -70,16 +70,22 @@ class Tests(commands.Cog):
             client.passed += 1
 
 # Unit Test - !ping command
+
+
 async def test_ping(self, ctx, messageCheck, testDescription):
     await ctx.send('!ping')
     await testConfirmation(self, ctx, messageCheck, testDescription)
 
 # Unit Test - !play command
+
+
 async def test_play(self, ctx, link, messageCheck, testDescription):
     await ctx.send(f'!play {link}')
     await testConfirmation(self, ctx, messageCheck, testDescription)
 
-#Helper function - Connects to the tester's voice channel
+# Helper function - Connects to the tester's voice channel
+
+
 async def connectVoiceChannel(ctx):
     if ctx.author.voice and ctx.author.voice.channel:
         channel = ctx.author.voice.channel
@@ -89,6 +95,8 @@ async def connectVoiceChannel(ctx):
         await ctx.send('Join a voice channel to further test - play, skip, disconnect')
 
 # Unit Test - !skip command
+
+
 async def test_skip(self, ctx,  messageCheck, testDescription):
     if ctx.author.voice and ctx.author.voice.channel:
         await ctx.send(f'!skip')
@@ -97,11 +105,15 @@ async def test_skip(self, ctx,  messageCheck, testDescription):
         await ctx.send("Error: Tester is not a channel")
 
 # Unit Test - !stop command
+
+
 async def test_stop(self, ctx, messageCheck, testDescription):
     await ctx.send(f'!stop')
     await testConfirmation(self, ctx, messageCheck, testDescription)
 
 #Helper function - Checks bot replies for correctness
+
+
 async def testConfirmation(self, ctx, messageCheck, testDescription):
 
     def check(message):
