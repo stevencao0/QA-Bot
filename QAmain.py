@@ -3,8 +3,8 @@ import os
 from discord.ext import commands
 # Discord.py is an Asynchornous library - functions are called when responding to an event
 #.\QAmain.py
-client = commands.Bot(command_prefix='!')
-token = 'INSERT BOT TOKEN HERE'
+client = commands.Bot(command_prefix='.')
+token = ''
 
 
 @client.command()

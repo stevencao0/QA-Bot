@@ -37,17 +37,18 @@ class Tests(commands.Cog):
         #Test - !play - Is the tester in a voice channel while calling?
         await test_play(self, ctx, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 'You need to be in a voice channel.', "Calling !play while not in a voice channel.")
         time.sleep(1)
+        #Test - !play - Can bot join and play music?
+        await connectVoiceChannel(ctx)
+        time.sleep(1)
+        await test_play(self, ctx, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '**Now playing:** Rick Astley - Never Gonna Give You Up (Official Music Video)',
+                        "Using !play command in text channel to queue the URL youtube link to music bot and play in the requestor's voice channel")
+        time.sleep(8)
         #Test - !play - Tester input an empty link
         await test_play(self, ctx, '', 'Invalid Youtube Link', '!play command - with no link input')
         time.sleep(1)
         #Test - !play - Tester input an invalid link
         await test_play(self, ctx, 'https://www.youtube.com/watch?v=dQw4w9WgXc', 'Invalid Youtube Link', '!play command - with incorrect link')
         time.sleep(1)
-        #Test - !play - Can bot join and play music?
-        await connectVoiceChannel(ctx)
-        await test_play(self, ctx, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', '**Now playing:** Rick Astley - Never Gonna Give You Up (Official Music Video)',
-                        "Using !play command in text channel to queue the URL youtube link to music bot and play in the requestor's voice channel")
-        time.sleep(8)
         #Test - !play - Queue another song
         await test_play(self, ctx, 'https://www.youtube.com/watch?v=jDwVkXVHIqg', '**Added to Queue:** toad sings chandelier', "Queue another song while bot is playing music")
         time.sleep(5)
@@ -55,8 +56,9 @@ class Tests(commands.Cog):
         await test_skip(self, ctx, '**Now playing:** toad sings chandelier', "Using !skip command in text channel to skip music bot's current song")
         time.sleep(5)
         #Test - !stop - Can bot stop playing with '!stop'?
-        await test_stop(self, ctx, 'Stoppingu', "Using !stop command in text channel to stop the music bot")
+        await test_stop(self, ctx, 'Stopping', "Using !stop command in text channel to stop the music bot")
         #Finish - Disconnect from voice channel, produce worksheet file, close QA bot
+        await ctx.send(f'---------------TEST SUITE FINISHED---------------')
         await ctx.guild.voice_client.disconnect()
         await worksheetDataEntryManual(client.row+2, "", "Passed / Total", str(client.passed)+"/"+str(client.row), "")
         client.workbook.close()
